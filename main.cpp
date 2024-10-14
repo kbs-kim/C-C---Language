@@ -2,8 +2,6 @@
 #include <string>
 #include <malloc.h>
 
-
-
 using namespace std;
 
 int ex01()
@@ -1123,31 +1121,41 @@ int ex1010_4()
     // colors[1], colors[2], colors[3]
 }
 
-class Color {
+class Color
+{
     int red, green, blue;
-    public:
-        Color() { red = green = blue = 0; }
-        Color(int r, int g, int b) { red = r; green = g; blue = b; }
-        void setColor(int r, int g, int b) { red = r; green = g; blue = b; }
-        void show() { cout << red << ' '<< green << ' ' << blue << endl; }
+
+public:
+    Color() { red = green = blue = 0; }
+    Color(int r, int g, int b)
+    {
+        red = r;
+        green = g;
+        blue = b;
+    }
+    void setColor(int r, int g, int b)
+    {
+        red = r;
+        green = g;
+        blue = b;
+    }
+    void show() { cout << red << ' ' << green << ' ' << blue << endl; }
 };
 
 int ex1014_1()
 {
     Color screenColor(255, 0, 0); // 빨간색 객체 생성
-    Color *p; // Color 포인터 p 선언
-    p = &screenColor; // (1) p가 screenColor주소를 가지도록 코드 작성.
+    Color *p;                     // Color 포인터 p 선언
+    p = &screenColor;             // (1) p가 screenColor주소를 가지도록 코드 작성.
 
     (*p).show(); // (2) p와 show()를 이용하려 screenClor 색을 출력한다.
     // p->show();  이렇게 표현할 수 있다.
 
     Color colors[3]; // (3) Color의 일차원 배열 colors선언. 원소는 3개
-    p = colors; // (4) p가 colors배열을 가리키도록 코드 작성
-
+    p = colors;      // (4) p가 colors배열을 가리키도록 코드 작성
 
     colors[0].setColor(255, 0, 0); // (5) colors[0]의 색을 빨간색으로 설정.
-    //빨강: p[2] => *(p+2)
-
+    // 빨강: p[2] => *(p+2)
 
     colors[1].setColor(0, 255, 0); // (6) colors[1]의 색을 초록색으로 설정
     colors[2].setColor(0, 0, 255); // (7) colors[2]의 색을 파란색으로 설정
@@ -1157,53 +1165,147 @@ int ex1014_1()
     {
         p[i].show();
     }
-    /* 
-        colors[0].show(); 
+    /*
+        colors[0].show();
         colors[1].show();
         colors[2].show();
     */
     return 0;
 }
 
+// int ex1014_2(int number)
 int ex1014_2()
 {
+
     int A[5]; // <---컴파일러가 자동으로 메모리 할당
+    // int A[number]; //배열안에 변수를 넣을 수 없다.
     A[0] = 100;
     A[1] = 200;
     A[2] = 300;
     A[3] = 400;
     A[4] = 500;
 
-    for(int n =0; n<5; n++)
+    // A=100; //변경 불가! 배열은 주소를 가지고 있기 때문에 주소에 값을 넣을 수 없다.
+
+    for (int n = 0; n < 5; n++)
     {
-        printf("%d \n", A[n]);
+        printf("%d \n", A[n], *(A + n));
     }
+    delete[] A; // <---- 메모리 해제
 }
 
-
-int ex1014_3()
+int ex1014_3(int number)
 {
 
-    int* A = (int*)malloc(5*sizeof(int)); // <----- 개발자가 동적할당
+    int *A = (int *)malloc(number * sizeof(int)); // <----- 개발자가 동적할당
     A[0] = 100;
     A[1] = 200;
     A[2] = 300;
     A[3] = 400;
     A[4] = 500;
 
-    for(int n =0; n<5; n++)
+    for (int n = 0; n < 5; n++)
     {
-        printf("%d \n", A[n]);
+        printf("%d \n", A[n], *(A + n));
     }
 
     free(A); // <---- 메모리 해제
-
 }
 
-int main(void)
+int ex1014_4(int number)
+{
+
+    int *A = new int[number]; // <----- 개발자가 동적할당
+    A[0] = 100;
+    A[1] = 200;
+    A[2] = 300;
+    A[3] = 400;
+    A[4] = 500;
+
+    for (int n = 0; n < 5; n++)
+    {
+        printf("%d \n", A[n], *(A + n));
+    }
+
+    delete[] A; // <---- 메모리 해제
+}
+
+int ex1014_5(void)
 {
 
     ex1014_2();
-    ex1014_3();
+    ex1014_3(5);
+    ex1014_4(5);
+
+    // p[i]==*(p+i) 이다. 이표현은 외워두자!!
+
     return 0;
 }
+
+class Circle3
+{
+    int radius;
+
+public:
+    Circle3();
+    Circle3(int r);
+    ~Circle3();
+    void setRadius(int r) { radius = r; }
+    double getArea() { return 3.14 * radius * radius; }
+};
+Circle3::Circle3()
+{
+    radius = 1;
+    cout << "생성자 실행 radius = " << radius << endl;
+}
+Circle3::Circle3(int r)
+{
+    radius = r;
+    cout << "생성자 실행 radius = " << radius << endl;
+}
+Circle3::~Circle3()
+{
+    cout << "소멸자 실행 radius = " << radius << endl;
+}
+
+int ex1014_6()
+{
+    Circle3 *p;
+    Circle3 *q;
+    p = new Circle3;
+    q = new Circle3(10);
+
+    cout << (*p).getArea() << endl;
+    // cout<<p->getArea()<<endl; (*p).getArea()와 동일
+    cout << (*q).getArea() << endl;
+    // cout<<q->getArea()<<endl; (*q).getArea()와 동일
+
+    delete p;
+    delete q;
+
+    return 0;
+}
+
+int main()
+{
+    Circle3 *p = new Circle3[3];
+
+    cout << p[0].getArea() << endl;
+    cout << p[1].getArea() << endl;
+    cout << p[2].getArea() << endl;
+
+    Circle3 *q = p;
+    cout << q[0].getArea() << endl;
+    cout << q[1].getArea() << endl;
+    cout << q[2].getArea() << endl;
+
+    cout << "----------------------\n";
+    cout << (*(q + 0)).getArea() << endl; //(q+0)->
+    cout << (*(q + 1)).getArea() << endl; //(q+1)->
+    cout << (*(q + 2)).getArea() << endl; //(q+2)->
+
+    delete[] p;
+
+    return 0;
+}
+
