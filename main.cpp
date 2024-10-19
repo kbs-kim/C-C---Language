@@ -881,6 +881,11 @@ int ex0930_4()
     cout << b.getWidth() << ", " << b.getHeight() << endl;
 }
 
+
+
+
+
+
 inline bool isEven(int B)
 {
     if (B % 2 == 0)
@@ -907,6 +912,14 @@ int ex0930_5()
 //     // calc.run(); // run() 함수 호출
 //     return 0;
 // }
+
+
+
+
+
+
+
+
 
 /*메모리 읽기 쓰기*/
 class Ram
@@ -976,7 +989,7 @@ int ex1007_3()
     // A = 200; //컴파일 에러. const 변수는 값을 변경할 수 없다.
 }
 
-class Person
+class PERSON33
 {
 public:
     double money; // 개인 소유의 돈
@@ -984,7 +997,7 @@ public:
     {
         money += money_in;
     }
-    Person()
+    PERSON33()
     {
         money = 0;
     }
@@ -996,15 +1009,15 @@ public:
 };
 
 // static 변수 생성. 전역 공간에 생성
-int Person::sharedMoney = 10; // 10으로 초기화
+int PERSON33::sharedMoney = 10; // 10으로 초기화
 
 int ex1007_4()
 {
 
-    Person han;
+    PERSON33 han;
     han.money = 100;       // han의 개인 돈 =100
     han.sharedMoney = 200; // static멤버 접근, 공급 =200
-    Person lee;
+    PERSON33 lee;
     lee.money;         // lee의 개인동 =350
     lee.addMoney(200); // static멤버 접근, 공금 =400
     lee.addShared(300);
@@ -1030,19 +1043,19 @@ int ex1010_1()
     return 0;
 }
 
-class Person2
+class PERSON332
 {
 public:
     int money;
     string name;
 
-    Person2() { money = 0; }
-    Person2(string name_in)
+    PERSON332() { money = 0; }
+    PERSON332(string name_in)
     {
         money = 0;
         name = name_in;
     }
-    ~Person2()
+    ~PERSON332()
     {
         cout << name << "의 money는" << money << endl;
     }
@@ -1059,11 +1072,11 @@ public:
     }
 };
 
-int Person2::sharedMoney = 0;
+int PERSON332::sharedMoney = 0;
 
 int ex1010_2()
 {
-    Person2 A("KANG"), B("KIM");
+    PERSON332 A("KANG"), B("KIM");
     // 3월
     A.addMoney(100);
     A.addShared(5);
@@ -1075,25 +1088,32 @@ int ex1010_2()
     A.addShared(5);
     B.addMoney(200);
     B.addShared(5);
-    cout << "공금" << Person2::sharedMoney << endl;
-    cout << "공금" << Person2::sharedMoney << endl;
+    cout << "공금" << PERSON332::sharedMoney << endl;
+    cout << "공금" << PERSON332::sharedMoney << endl;
 }
+
+
+
+
+
+
 
 /*객체 포인터*/
 int ex1010_3()
 {
-    Person2 A("KANG");
-    A.addMoney(100);
-    A.addShared(5);
+    PERSON332 A("KANG"); // 객체 생성
+    A.addMoney(100);    // 100원 추가
+    A.addShared(5);    // 공금 5원 추가
 
     // p:주소
     // &A : A의 주소
     // A: 객체
     // *p : 객체 (p가 가리키도 있는 객체)
 
-    Person2 *p = &A;
+    PERSON332 *p = &A; // 포인터 p에 A의 주소를 저장
 
-    cout << A.money << ' ' << (*p).money << ' ' << p->money << endl;
+    cout << A.money << ' ' << (*p).money << ' ' << p->money << endl; // 100 100 100
+
 }
 
 int ex1010_4()
@@ -1120,6 +1140,12 @@ int ex1010_4()
     // Color* p =colors;
     // colors[1], colors[2], colors[3]
 }
+
+
+
+
+
+
 
 class Color
 {
@@ -1173,6 +1199,11 @@ int ex1014_1()
     return 0;
 }
 
+
+
+
+
+
 // int ex1014_2(int number)
 int ex1014_2()
 {
@@ -1191,7 +1222,7 @@ int ex1014_2()
     {
         printf("%d \n", A[n], *(A + n));
     }
-    delete[] A; // <---- 메모리 해제
+    //delete[] A; // <---- 메모리 해제
 }
 
 int ex1014_3(int number)
@@ -1286,7 +1317,7 @@ int ex1014_6()
     return 0;
 }
 
-int main()
+int ex1014_7()
 {
     Circle3 *p = new Circle3[3];
 
@@ -1309,3 +1340,100 @@ int main()
     return 0;
 }
 
+
+
+
+
+
+
+/* 실습 7-3 */
+class PERSON3
+{
+    std::string name; // string을 std::string으로 변경
+
+public:
+    PERSON3() { name = ""; }
+    PERSON3(std::string name) { this->name = name; }
+    std::string getName() { return name; } // return 타입도 std::string으로 변경
+    void setName(std::string name) { this->name = name; } // 인자 타입도 std::string으로 변경
+};
+
+class Family
+{
+    std::string name; // string을 std::string으로 변경
+    PERSON3 *p; // PERSON3 배열 포인터
+    int size; // PERSON3 배열의 크기. 가족 구성원 수
+
+public:
+    Family(std::string name_in, int size_in); // 생성자 인자의 string도 std::string으로 변경
+    void setName(int index, std::string name); // 인자 타입도 std::string으로 변경
+    void show(); // 모든 가족 구성원 출력
+    ~Family();
+};
+
+Family::Family(std::string name_in, int size_in)
+{
+    name = name_in;
+    size = size_in;
+    p = new PERSON3[size]; // size 개수만큼 PERSON3 배열 동적 생성
+}
+
+void Family::setName(int index, std::string name)
+{
+    p[index].setName(name); // PERSON3 객체의 setName 호출
+}
+
+void Family::show()
+{
+    cout << name << " family is consist of " << size << " members" << endl;
+    for (int n = 0; n < size; n++)
+        cout << p[n].getName() << endl; // getName 호출 후 출력
+}
+
+Family::~Family()
+{
+    cout << name << " family is deleted" << endl;
+    delete[] p; // 동적 할당한 PERSON3 배열 메모리 해제
+}
+
+int ex1017_1()
+{
+    Family simpson("Simpson", 3); // 3명으로 구성된 Simpson 가족
+    simpson.setName(0, "Mr. Simpson");
+    simpson.setName(1, "Mrs. Simpson");
+    simpson.setName(2, "Bart Simpson");
+    simpson.show();
+}
+
+
+class A {
+public:
+    int value; // A 클래스의 value 변수
+};
+
+class B {
+public:
+    A sub; // A 클래스 객체를 포함하는 sub 변수
+    int counter; // B 클래스의 counter 변수
+};
+
+int main() {
+    B abc;
+
+    abc.sub.value = 100;  // A 클래스의 value 변수에 값 할당
+    abc.counter = 200;    // B 클래스의 counter 변수에 값 할당
+
+    cout << "abc.sub.value = " << abc.sub.value << endl;  // 출력: 100
+    cout << "abc.counter = " << abc.counter << endl;      // 출력: 200
+
+    // 동적 메모리 할당
+    int* p = new int; // int 타입 메모리 공간 동적 할당
+    *p = 50; // 할당된 메모리에 값 할당
+
+    cout << "*p = " << *p << endl;  // 출력: 50
+
+    // 동적 할당된 메모리 해제
+    delete p;  // 할당된 메모리 반환
+
+    return 0;  // 프로그램 정상 종료
+}
