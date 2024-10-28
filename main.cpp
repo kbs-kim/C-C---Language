@@ -748,7 +748,7 @@ int ex0930_1()
 
 void func0930()
 {
-    Circle donut; //(1) donut이 생성된다.
+    Circle2 donut; //(1) donut이 생성된다.
     double area = donut.getArea();
     cout << "donut area is " << area << endl;
 } //(2) 이 함수를 나올면서 donut이 소멸된다.
@@ -881,11 +881,6 @@ int ex0930_4()
     cout << b.getWidth() << ", " << b.getHeight() << endl;
 }
 
-
-
-
-
-
 inline bool isEven(int B)
 {
     if (B % 2 == 0)
@@ -912,14 +907,6 @@ int ex0930_5()
 //     // calc.run(); // run() 함수 호출
 //     return 0;
 // }
-
-
-
-
-
-
-
-
 
 /*메모리 읽기 쓰기*/
 class Ram
@@ -1092,18 +1079,12 @@ int ex1010_2()
     cout << "공금" << PERSON332::sharedMoney << endl;
 }
 
-
-
-
-
-
-
 /*객체 포인터*/
 int ex1010_3()
 {
     PERSON332 A("KANG"); // 객체 생성
-    A.addMoney(100);    // 100원 추가
-    A.addShared(5);    // 공금 5원 추가
+    A.addMoney(100);     // 100원 추가
+    A.addShared(5);      // 공금 5원 추가
 
     // p:주소
     // &A : A의 주소
@@ -1113,39 +1094,32 @@ int ex1010_3()
     PERSON332 *p = &A; // 포인터 p에 A의 주소를 저장
 
     cout << A.money << ' ' << (*p).money << ' ' << p->money << endl; // 100 100 100
-
 }
 
-int ex1010_4()
-{
-    Circle circleArray[3]; // Circle 객체 배열 생성
-    // Circle circleArray[0], circleArray[1], circleArray[2]; //각자 하나의 객체이다.
-    circleArray[1].radius = 50;
-    circleArray[2].radius = 70;
+// int ex1010_4()
+// {
+//     Circle3 circleArray[3]; // Circle3 객체 배열 생성
+//     // Circle3 circleArray[0], circleArray[1], circleArray[2]; //각자 하나의 객체이다.
+//     circleArray[1].radius = 50;
+//     circleArray[2].radius = 70;
 
-    Circle *p = &circleArray[1];
-    cout << (*p).radius << ' ' << p->radius << endl; // 50 50
+//     Circle3 *p = &circleArray[1];
+//     cout << (*p).radius << ' ' << p->radius << endl; // 50 50
 
-    // 객체 배열 초기화 방법
-    Circle2 carray[3] = {Circle2(10), Circle2(20), Circle2(30)};
-    Circle2 *q;
-    q = carray;
-    cout << carray[0].radius << ' ' << q[0].radius << endl;
+//     // 객체 배열 초기화 방법
+//     Circle2 carray[3] = {Circle2(10), Circle2(20), Circle2(30)};
+//     Circle2 *q;
+//     q = carray;
+//     cout << carray[0].radius << ' ' << q[0].radius << endl;
 
-    q = &carray[1];
-    cout << (*(q + 1)).radius << endl;
-    cout << q[-1].radius << " " << q[0].radius << " " << q[1].radius << endl;
+//     q = &carray[1];
+//     cout << (*(q + 1)).radius << endl;
+//     cout << q[-1].radius << " " << q[0].radius << " " << q[1].radius << endl;
 
-    // color colors[3];
-    // Color* p =colors;
-    // colors[1], colors[2], colors[3]
-}
-
-
-
-
-
-
+//     // color colors[3];
+//     // Color* p =colors;
+//     // colors[1], colors[2], colors[3]
+// }
 
 class Color
 {
@@ -1199,11 +1173,6 @@ int ex1014_1()
     return 0;
 }
 
-
-
-
-
-
 // int ex1014_2(int number)
 int ex1014_2()
 {
@@ -1222,7 +1191,7 @@ int ex1014_2()
     {
         printf("%d \n", A[n], *(A + n));
     }
-    //delete[] A; // <---- 메모리 해제
+    // delete[] A; // <---- 메모리 해제
 }
 
 int ex1014_3(int number)
@@ -1273,8 +1242,12 @@ int ex1014_5(void)
     return 0;
 }
 
-class Circle3
-{
+
+
+
+
+
+class Circle3 {
     int radius;
 
 public:
@@ -1284,23 +1257,22 @@ public:
     void setRadius(int r) { radius = r; }
     double getArea() { return 3.14 * radius * radius; }
 };
-Circle3::Circle3()
-{
+
+Circle3::Circle3() {
     radius = 1;
     cout << "생성자 실행 radius = " << radius << endl;
 }
-Circle3::Circle3(int r)
-{
+
+Circle3::Circle3(int r) {
     radius = r;
     cout << "생성자 실행 radius = " << radius << endl;
 }
-Circle3::~Circle3()
-{
+
+Circle3::~Circle3() {
     cout << "소멸자 실행 radius = " << radius << endl;
 }
 
-int ex1014_6()
-{
+int ex1014_6() {
     Circle3 *p;
     Circle3 *q;
     p = new Circle3;
@@ -1317,8 +1289,7 @@ int ex1014_6()
     return 0;
 }
 
-int ex1014_7()
-{
+int ex1014_7() {
     Circle3 *p = new Circle3[3];
 
     cout << p[0].getArea() << endl;
@@ -1340,71 +1311,59 @@ int ex1014_7()
     return 0;
 }
 
-
-
-
-
-
-
 /* 실습 7-3 */
-class PERSON3
-{
+class PERSON3 {
     std::string name; // string을 std::string으로 변경
 
 public:
     PERSON3() { name = ""; }
     PERSON3(std::string name) { this->name = name; }
-    std::string getName() { return name; } // return 타입도 std::string으로 변경
+    std::string getName() { return name; }                // return 타입도 std::string으로 변경
     void setName(std::string name) { this->name = name; } // 인자 타입도 std::string으로 변경
 };
 
-class Family
-{
+class Family {
     std::string name; // string을 std::string으로 변경
-    PERSON3 *p; // PERSON3 배열 포인터
-    int size; // PERSON3 배열의 크기. 가족 구성원 수
+    PERSON3 *p;       // PERSON3 배열 포인터
+    int size;         // PERSON3 배열의 크기. 가족 구성원 수
 
 public:
-    Family(std::string name_in, int size_in); // 생성자 인자의 string도 std::string으로 변경
+    Family(std::string name_in, int size_in);  // 생성자 인자의 string도 std::string으로 변경
     void setName(int index, std::string name); // 인자 타입도 std::string으로 변경
-    void show(); // 모든 가족 구성원 출력
+    void show();                               // 모든 가족 구성원 출력
     ~Family();
 };
 
-Family::Family(std::string name_in, int size_in)
-{
+Family::Family(std::string name_in, int size_in) {
     name = name_in;
     size = size_in;
     p = new PERSON3[size]; // size 개수만큼 PERSON3 배열 동적 생성
 }
 
-void Family::setName(int index, std::string name)
-{
+void Family::setName(int index, std::string name) {
     p[index].setName(name); // PERSON3 객체의 setName 호출
 }
 
-void Family::show()
-{
+void Family::show() {
     cout << name << " family is consist of " << size << " members" << endl;
     for (int n = 0; n < size; n++)
         cout << p[n].getName() << endl; // getName 호출 후 출력
 }
 
-Family::~Family()
-{
+Family::~Family() {
     cout << name << " family is deleted" << endl;
     delete[] p; // 동적 할당한 PERSON3 배열 메모리 해제
 }
 
-int ex1017_1()
-{
+int ex1017_1() {
     Family simpson("Simpson", 3); // 3명으로 구성된 Simpson 가족
     simpson.setName(0, "Mr. Simpson");
     simpson.setName(1, "Mrs. Simpson");
     simpson.setName(2, "Bart Simpson");
     simpson.show();
-}
 
+    return 0;
+}
 
 class A {
 public:
@@ -1413,27 +1372,102 @@ public:
 
 class B {
 public:
-    A sub; // A 클래스 객체를 포함하는 sub 변수
+    A sub;       // A 클래스 객체를 포함하는 sub 변수
     int counter; // B 클래스의 counter 변수
 };
 
-int main() {
+int ex1028_1() {
     B abc;
 
-    abc.sub.value = 100;  // A 클래스의 value 변수에 값 할당
-    abc.counter = 200;    // B 클래스의 counter 변수에 값 할당
+    abc.sub.value = 100; // A 클래스의 value 변수에 값 할당
+    abc.counter = 200;   // B 클래스의 counter 변수에 값 할당
 
-    cout << "abc.sub.value = " << abc.sub.value << endl;  // 출력: 100
-    cout << "abc.counter = " << abc.counter << endl;      // 출력: 200
+    cout << "abc.sub.value = " << abc.sub.value << endl; // 출력: 100
+    cout << "abc.counter = " << abc.counter << endl;     // 출력: 200
 
     // 동적 메모리 할당
-    int* p = new int; // int 타입 메모리 공간 동적 할당
-    *p = 50; // 할당된 메모리에 값 할당
+    int *p = new int; // int 타입 메모리 공간 동적 할당
+    *p = 50;          // 할당된 메모리에 값 할당
 
-    cout << "*p = " << *p << endl;  // 출력: 50
+    cout << "*p = " << *p << endl; // 출력: 50
 
     // 동적 할당된 메모리 해제
-    delete p;  // 할당된 메모리 반환
+    delete p; // 할당된 메모리 반환
 
-    return 0;  // 프로그램 정상 종료
+    return 0; // 프로그램 정상 종료
+}
+
+class Circle5 {
+private:
+    int radius;
+
+public:
+    Circle5();
+    Circle5(int r);
+    ~Circle5();
+    double getArea() { return 3.14 * radius * radius; }
+    int getRadius() { return radius; }
+    void setRadius(int radius) { this->radius = radius; }
+};
+
+Circle5::Circle5() {
+    radius = 1;
+    cout << "생성자 실행 radius = " << radius << endl;
+}
+
+Circle5::Circle5(int radius) {
+    this->radius = radius;
+    cout << "생성자 실행 radius = " << radius << endl;
+}
+
+Circle5::~Circle5() {
+    cout << "소멸자 실행 radius = " << radius << endl;
+}
+
+void increase(Circle5 c) {
+    int r = c.getRadius();
+    c.setRadius(r + 1);
+}
+
+/*이름이 같지만 매개변수의 타입 다르다.*/
+void increase(Circle5 *c) {
+    int r = (*c).getRadius();
+    (*c).setRadius(r + 1);
+}
+
+int ex1028_2() {
+    Circle5 waffle(30);
+    increase(&waffle);
+    return 0;
+}
+
+/*실습 8-1*/
+// C는 A의 또 다른 이름이다.
+// 객체를 새로 만드는것이 아니다.
+void Swap(Circle5 &C, Circle5 &D) {
+    Circle5 tmp = C;
+    C = D;
+    D = tmp;
+}
+
+void ex1028_3() {
+    Circle5 A(30), B(10);
+    Swap(A, B);
+    cout << "A: " << A.getRadius() << endl;
+    cout << "B: " << B.getRadius() << endl;
+}
+
+void readRadius(Circle5 &cir) {
+    cout << "input:";
+    int tmp;
+    cin >> tmp;
+    cir.setRadius(tmp);
+}
+
+int main(void) {
+    Circle5 donut;
+    readRadius(donut);
+    cout << donut.getRadius() << endl;
+
+    return 0;
 }
