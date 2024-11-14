@@ -3,7 +3,7 @@
 #include <string>
 #include <malloc.h>
 #include <cstring>
-
+#include <cmath> // atan2 값을 호출할 때 이것 필요함
 
 using namespace std;
 
@@ -1245,12 +1245,8 @@ int ex1014_5(void)
     return 0;
 }
 
-
-
-
-
-
-class Circle3 {
+class Circle3
+{
     int radius;
 
 public:
@@ -1261,21 +1257,25 @@ public:
     double getArea() { return 3.14 * radius * radius; }
 };
 
-Circle3::Circle3() {
+Circle3::Circle3()
+{
     radius = 1;
     cout << "생성자 실행 radius = " << radius << endl;
 }
 
-Circle3::Circle3(int r) {
+Circle3::Circle3(int r)
+{
     radius = r;
     cout << "생성자 실행 radius = " << radius << endl;
 }
 
-Circle3::~Circle3() {
+Circle3::~Circle3()
+{
     cout << "소멸자 실행 radius = " << radius << endl;
 }
 
-int ex1014_6() {
+int ex1014_6()
+{
     Circle3 *p;
     Circle3 *q;
     p = new Circle3;
@@ -1292,7 +1292,8 @@ int ex1014_6() {
     return 0;
 }
 
-int ex1014_7() {
+int ex1014_7()
+{
     Circle3 *p = new Circle3[3];
 
     cout << p[0].getArea() << endl;
@@ -1315,7 +1316,8 @@ int ex1014_7() {
 }
 
 /* 실습 7-3 */
-class PERSON3 {
+class PERSON3
+{
     std::string name; // string을 std::string으로 변경
 
 public:
@@ -1325,7 +1327,8 @@ public:
     void setName(std::string name) { this->name = name; } // 인자 타입도 std::string으로 변경
 };
 
-class Family {
+class Family
+{
     std::string name; // string을 std::string으로 변경
     PERSON3 *p;       // PERSON3 배열 포인터
     int size;         // PERSON3 배열의 크기. 가족 구성원 수
@@ -1337,28 +1340,33 @@ public:
     ~Family();
 };
 
-Family::Family(std::string name_in, int size_in) {
+Family::Family(std::string name_in, int size_in)
+{
     name = name_in;
     size = size_in;
     p = new PERSON3[size]; // size 개수만큼 PERSON3 배열 동적 생성
 }
 
-void Family::setName(int index, std::string name) {
+void Family::setName(int index, std::string name)
+{
     p[index].setName(name); // PERSON3 객체의 setName 호출
 }
 
-void Family::show() {
+void Family::show()
+{
     cout << name << " family is consist of " << size << " members" << endl;
     for (int n = 0; n < size; n++)
         cout << p[n].getName() << endl; // getName 호출 후 출력
 }
 
-Family::~Family() {
+Family::~Family()
+{
     cout << name << " family is deleted" << endl;
     delete[] p; // 동적 할당한 PERSON3 배열 메모리 해제
 }
 
-int ex1017_1() {
+int ex1017_1()
+{
     Family simpson("Simpson", 3); // 3명으로 구성된 Simpson 가족
     simpson.setName(0, "Mr. Simpson");
     simpson.setName(1, "Mrs. Simpson");
@@ -1368,18 +1376,21 @@ int ex1017_1() {
     return 0;
 }
 
-class A {
+class A
+{
 public:
     int value; // A 클래스의 value 변수
 };
 
-class B {
+class B
+{
 public:
     A sub;       // A 클래스 객체를 포함하는 sub 변수
     int counter; // B 클래스의 counter 변수
 };
 
-int ex1028_1() {
+int ex1028_1()
+{
     B abc;
 
     abc.sub.value = 100; // A 클래스의 value 변수에 값 할당
@@ -1400,7 +1411,8 @@ int ex1028_1() {
     return 0; // 프로그램 정상 종료
 }
 
-class Circle5 {
+class Circle5
+{
 private:
     int radius;
 
@@ -1413,32 +1425,38 @@ public:
     void setRadius(int radius) { this->radius = radius; }
 };
 
-Circle5::Circle5() {
+Circle5::Circle5()
+{
     radius = 1;
     cout << "Constructor radius = " << radius << endl;
 }
 
-Circle5::Circle5(int radius) {
+Circle5::Circle5(int radius)
+{
     this->radius = radius;
     cout << "Constructor radius = " << radius << endl;
 }
 
-Circle5::~Circle5() {
+Circle5::~Circle5()
+{
     cout << "Destructor radius = " << radius << endl;
 }
 
-void increase(Circle5 c) {
+void increase(Circle5 c)
+{
     int r = c.getRadius();
     c.setRadius(r + 1);
 }
 
 /*이름이 같지만 매개변수의 타입 다르다.*/
-void increase(Circle5 *c) {
+void increase(Circle5 *c)
+{
     int r = (*c).getRadius();
     (*c).setRadius(r + 1);
 }
 
-int ex1028_2() {
+int ex1028_2()
+{
     Circle5 waffle(30);
     increase(&waffle);
     return 0;
@@ -1447,13 +1465,15 @@ int ex1028_2() {
 /*실습 8-1*/
 // C는 A의 또 다른 이름이다.
 // 객체를 새로 만드는것이 아니다.
-void Swap(Circle5 &C, Circle5 &D) {
+void Swap(Circle5 &C, Circle5 &D)
+{
     Circle5 tmp = C;
     C = D;
     D = tmp;
 }
 
-void ex1028_3() {
+void ex1028_3()
+{
     Circle5 A(30), B(10);
     Swap(A, B);
     cout << "A: " << A.getRadius() << endl;
@@ -1461,124 +1481,846 @@ void ex1028_3() {
 }
 
 // 실습 8-2
-void readRadius(Circle5& cir) {
-	cout << "정수 값으로 반지름을 입력하세요 >> ";
-	int tmp;
-	cin >> tmp;
-	cir.setRadius(tmp);
+void readRadius(Circle5 &cir)
+{
+    cout << "정수 값으로 반지름을 입력하세요 >> ";
+    int tmp;
+    cin >> tmp;
+    cir.setRadius(tmp);
 }
 
-void ex1028_5() {
-	Circle5 donut;
-	readRadius(donut);
-	cout << "donut의 면적 = " << donut.getArea() << endl;
+void ex1028_5()
+{
+    Circle5 donut;
+    readRadius(donut);
+    cout << "donut의 면적 = " << donut.getArea() << endl;
 }
 
-void ex1031_1() { // 얕은 복사
-	int* A = new int[10];
-	int* B;
-	
-	for (int i = 0; i < 10; i++) {
-		A[i] = i * 10;
-	}
+void ex1031_1()
+{ // 얕은 복사
+    int *A = new int[10];
+    int *B;
 
-	B = A; // 얕은 복사, 메모리 주소를 공유
+    for (int i = 0; i < 10; i++)
+    {
+        A[i] = i * 10;
+    }
 
-	delete[] A;
+    B = A; // 얕은 복사, 메모리 주소를 공유
+
+    delete[] A;
 }
 
-void ex1031_2() { // 깊은 복사
-	int* A = new int[10];
-	int* B;
+void ex1031_2()
+{ // 깊은 복사
+    int *A = new int[10];
+    int *B;
 
-	for (int i = 0; i < 10; i++) {
-		A[i] = i * 10;
-	}
+    for (int i = 0; i < 10; i++)
+    {
+        A[i] = i * 10;
+    }
 
-	B = new int[10]; // 깊은 복사
-	for (int i = 0; i < 10; i++) {
-		B[i] = A[i]; // 주소 값에 있는 내용물을 직접 복사해줌
-	}
+    B = new int[10]; // 깊은 복사
+    for (int i = 0; i < 10; i++)
+    {
+        B[i] = A[i]; // 주소 값에 있는 내용물을 직접 복사해줌
+    }
 
-	delete[] A;
+    delete[] A;
 }
 
+// 실습 8-3
+class Accumulator
+{
+    int value;
 
-//실습 8-3
-class Accumulator {
-	int value;
 public:
-	Accumulator(int value); // 매개변수 value로 멤버 value를 초기화한다.
-	Accumulator& add(int n); // value에 n을 더해 값을 누적한다.
-	int get(); // 누적된 값 value를 리턴한다.
+    Accumulator(int value);  // 매개변수 value로 멤버 value를 초기화한다.
+    Accumulator &add(int n); // value에 n을 더해 값을 누적한다.
+    int get();               // 누적된 값 value를 리턴한다.
 };
 
-Accumulator::Accumulator(int value) {
-	this->value = value;
+Accumulator::Accumulator(int value)
+{
+    this->value = value;
 }
 
-Accumulator& Accumulator::add(int n) {
-	this->value += n;
-	return *this;
+Accumulator &Accumulator::add(int n)
+{
+    this->value += n;
+    return *this;
 }
 
-int Accumulator::get() {
-	return this->value;
+int Accumulator::get()
+{
+    return this->value;
 }
 
-void ex1031_3() {
-	Accumulator acc(10);
-	acc.add(5).add(6).add(7); // acc의 value 멤버가 28이 된다.
-	cout << acc.get() << endl; // 28 출력
+void ex1031_3()
+{
+    Accumulator acc(10);
+    acc.add(5).add(6).add(7);  // acc의 value 멤버가 28이 된다.
+    cout << acc.get() << endl; // 28 출력
 }
 
-// 실습 8-4
-class Book {
-	char* title; // 제목 문자열
-	int price; // 가격
+// 실습 8-4 포인터를 이용한 복사 생성자
+class Book
+{
+    char *title; // 제목 문자열
+    int price;   // 가격
 public:
-	Book(char* title, int price); // 그냥 자
-	Book(Book& obj); // 복사 생성자
-	~Book();
-	void set(char* title, int price);
-	void show() { cout << title << ' ' << price << "원" << endl; }
+    Book(char *title, int price); // 그냥 자
+    Book(Book &obj);              // 복사 생성자
+    ~Book();
+    void operator+=(int value)
+    {
+        this->price = price + value;
+    }
+    void operator-=(int value)
+    {
+        this->price = price + value;
+    }
+
+    bool operator==(int price)
+    {
+        return this->price == price;
+    }
+
+    void set(char *title, int price);
+    void show() { cout << title << ' ' << price << "원" << endl; }
+};
+
+Book::Book(char *title, int price)
+{
+    // 클래스 멤버 명이랑 함수 내 지역변수명이랑 같을때 this 포인터 사용
+    // this->title = title;
+    // this->price = price;
+    // 클래스 멤버   지역변수
+    // 근데 이리하는게 바람직하지 않다고...
+
+    int length = strlen(title);
+    this->title = new char[length + 1];
+    this->price = price;
+    strcpy(this->title, title);
+}
+Book::Book(Book &obj)
+{
+    this->price = obj.price;
+    int length = strlen(obj.title);
+    this->title = new char[length + 1];
+    strcpy(this->title, obj.title);
+}
+Book::~Book()
+{
+    delete[] this->title;
+    cout << "소멸자" << endl;
+}
+void Book::set(char *title, int price)
+{
+    delete[] this->title;
+    int length = strlen(title);
+    this->title = new char[length + 1];
+    strcpy(this->title, title);
+    this->price = price;
+}
+void ex1031_4()
+{
+    // Book cpp("명품C++", 10000); // 글자는 고정된 값이기에(상수라 생각하면 됨), 함수쪽이랑
+    Book cpp((char *)"명품C++", 10000);
+    Book java = cpp;
+    java.set((char *)"명품자바", 12000);
+    cpp.show();
+    java.show();
+}
+
+/*실습 8-5*/
+class Book2
+{
+    char title[100]; // 제목 문자열
+    int price;       // 가격
+public:
+    Book2(char *title, int price); // 그냥 자
+    ~Book2();
+    void set(char *title, int price);
+    void show() { cout << title << ' ' << price << "원" << endl; }
+};
+
+Book2::Book2(char *title, int price)
+{
+    strcpy(this->title, title);
+    this->price = price;
+}
+
+Book2::~Book2()
+{
+    cout << "소멸자" << endl;
+}
+void Book2::set(char *title, int price)
+{
+    strcpy(this->title, title);
+    this->price = price;
+}
+int ex1104_1()
+{
+    // Book cpp("명품C++", 10000); // 글자는 고정된 값이기에(상수라 생각하면 됨), 함수쪽이랑
+    Book cpp((char *)"명품C++", 10000);
+    Book java = cpp;
+    java.set((char *)"명품자바", 12000);
+    cpp.show();
+    java.show();
+    return 0;
+}
+
+// 9장: 복소수 , friend
+class Rect
+{
+    int width, height;
+
+public:
+    Rect(int width, int height)
+    {
+        this->width = width;
+        this->height = height;
+    }
+    bool equals(Rect r);
+};
+bool Rect::equals(Rect r)
+{
+    if (this->width == r.width && this->height == r.height)
+        return true;
+    else
+        return false;
+}
+
+int ex1104_2(void)
+{
+    Rect a(3, 4), b(4, 5);
+    if (a.equals(b)) // equals(a,b)
+        cout << "height는equal" << endl;
+    else
+        cout << "not equal" << endl;
+
+    return 0;
+}
+
+class Rect2
+{
+    int width, height;
+
+public:
+    Rect2(int width, int height)
+    {
+        this->width = width;
+        this->height = height;
+    }
+    friend bool equals(Rect2 a, Rect2 b); // friend 선언함으로서 접근 가능
+};
+
+bool equals(Rect2 a, Rect2 b)
+{
+    // width,  private이기 때문에 접근 불가
+    if (a.width == b.width && a.height == b.height)
+        return true;
+    else
+        return false;
+}
+
+int ex1104_3()
+{
+    Rect2 a(2, 3), b(3, 4);
+    if (equals(a, b))
+        cout << "equal" << endl;
+    else
+        cout << "not equal" << endl;
+
+    return 0;
+}
+
+/*연산자 중복*/
+class Power
+{
+    int kick;
+    int punch;
+
+public:
+    // 생성자 정의
+    Power(int kick = 0, int punch = 0)
+    {
+        this->kick = kick;
+        this->punch = punch;
+    }
+
+    // + 연산자 오버로딩
+    Power operator+(Power input)
+    {
+        Power tmp;
+        tmp.kick = this->kick + input.kick;
+        tmp.punch = this->punch + input.punch;
+        return tmp;
+    }
+
+    // - 연산자 오버로딩
+    Power operator-(Power input)
+    {
+        Power tmp;
+        tmp.kick = this->kick - input.kick;
+        tmp.punch = this->punch - input.punch;
+        return tmp;
+    }
+
+    // == 연산자 오버로딩
+    bool operator==(Power input)
+    {
+        return (this->kick == input.kick && this->punch == input.punch);
+    }
+
+    // 객체의 속성 출력 함수
+    void show()
+    {
+        cout << "kick = " << kick << ", punch = " << punch << endl;
+    }
+};
+
+#define PI (4.0 * atan(1.0)) // 3.1415926535
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+class complex
+{
+    float re;
+    float im;
+
+public:
+    // 생성자
+    complex(float re = 0, float im = 0) : re(re), im(im) {}
+
+    // operator+
+    complex operator+(complex input)
+    {
+        return complex(this->re + input.re, this->im + input.im);
+    }
+
+    // operator-
+    complex operator-(complex input)
+    {
+        return complex(this->re - input.re, this->im - input.im);
+    }
+
+    // operator*
+    complex operator*(complex input)
+    {
+        double mag = getMag() * input.getMag();
+        double angle = getAngle() + input.getAngle();
+        return convert2Cart(mag, angle);
+    }
+
+    // operator/
+    complex operator/(complex input)
+    {
+        double mag = getMag() / input.getMag();
+        double angle = getAngle() - input.getAngle();
+        return convert2Cart(mag, angle);
+    }
+
+    // 출력 함수
+    void show()
+    {
+        cout.precision(5);
+        if (im >= 0)
+            cout << re << "+j" << im << endl;
+        else
+            cout << re << "-j" << -im << endl;
+    }
+
+    // 크기 계산
+    double getMag() const
+    {
+        return sqrt(re * re + im * im);
+    }
+
+    // 각도 계산
+    double getAngle() const
+    {
+        if (re == 0 && im == 0)
+            return 0.0;
+        else if (re == 0 && im > 0)
+            return PI / 2.0;
+        else if (re == 0 && im < 0)
+            return -PI / 2.0;
+        else
+            return atan(im / re);
+    }
+
+    // 극좌표를 직교좌표로 변환
+    complex convert2Cart(double mag, double ang) const
+    {
+        return complex(mag * cos(ang), mag * sin(ang));
+    }
+};
+
+int ex1107_1()
+{
+    complex a(2, 3), b(4, 5), c, d, e, f;
+    c = a + b;
+    d = a - b;
+    e = a * b;
+    f = a / b;
+    c.show();
+    d.show();
+    e.show();
+    f.show();
+
+    return 0;
+}
+
+/*실습 9-1
+class Book {
+    char* title; // 제목 문자열
+    int price; // 가격
+public:
+    Book(char* title, int price); // 그냥 자
+    Book(Book& obj); // 복사 생성자
+    ~Book();
+    void operator+=(int value){
+        this->price = price +value;
+
+    }
+    void operator-=(int value){
+        this->price = price +value;
+    }
+
+    void set(char* title, int price);
+    void show() { cout << title << ' ' << price << "원" << endl; }
 };
 
 Book::Book(char* title, int price) {
-	// 클래스 멤버 명이랑 함수 내 지역변수명이랑 같을때 this 포인터 사용
-	//this->title = title;
-	//this->price = price;
+    // 클래스 멤버 명이랑 함수 내 지역변수명이랑 같을때 this 포인터 사용
+    //this->title = title;
+    //this->price = price;
     // 클래스 멤버   지역변수
-	// 근데 이리하는게 바람직하지 않다고...
+    // 근데 이리하는게 바람직하지 않다고...
 
-	int length = strlen(title);
-	this->title = new char[length+1];
-	this->price = price;
-	strcpy(this->title, title);
+    int length = strlen(title);
+    this->title = new char[length+1];
+    this->price = price;
+    strcpy(this->title, title);
 
 }
 Book::Book(Book& obj) {
-	this->price = obj.price;
-	int length = strlen(obj.title);
-	this->title = new char[length + 1];
-	strcpy(this->title, obj.title);
+    this->price = obj.price;
+    int length = strlen(obj.title);
+    this->title = new char[length + 1];
+    strcpy(this->title, obj.title);
 }
 Book::~Book() {
-	delete[] this->title;
-	cout << "소멸자" << endl;
+    delete[] this->title;
+    cout << "소멸자" << endl;
 }
 void Book::set(char* title, int price) {
-	delete[] this->title;
-	int length = strlen(title);
-	this->title = new char[length+1];
-	strcpy(this->title, title);
-	this->price = price;
+    delete[] this->title;
+    int length = strlen(title);
+    this->title = new char[length+1];
+    strcpy(this->title, title);
+    this->price = price;
 }
-void main() {
-	// Book cpp("명품C++", 10000); // 글자는 고정된 값이기에(상수라 생각하면 됨), 함수쪽이랑 
-	Book cpp((char*) "명품C++", 10000);
-	Book java = cpp;
-	java.set((char*) "명품자바", 12000);
-	cpp.show();
-	java.show();
+*/
+
+int ex1107_2()
+{
+    Book a((char *)"About APPle", 20000), b((char *)"What is justice?", 30000);
+
+    a += 5000; // a.operator+=(int value)
+    b -= 5000; //
+    a.show();
+    b.show();
+
+    return 0;
+}
+
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <cmath>
+
+using namespace std;
+
+/*11월7일자 코드.*/
+
+class Power2
+{
+    int kick;
+    int punch;
+
+public:
+    // 생성자 정의
+    Power2(int kick = 0, int punch = 0)
+    {
+        this->kick = kick;
+        this->punch = punch;
+    }
+
+    void show()
+    {
+        cout << "kick=" << kick << ", punch=" << punch << endl;
+    }
+
+    // operator+와 operator-를 friend로 선언하여 접근 가능하게 함
+    friend Power2 operator+(Power2 A, Power2 B);
+    friend Power2 operator-(Power2 A, Power2 B);
+};
+
+// 외부 함수
+Power2 operator+(Power2 A, Power2 B)
+{
+    Power2 tmp;
+    tmp.kick = A.kick + B.kick;
+    tmp.punch = A.punch + B.punch;
+    return tmp;
+}
+
+Power2 operator-(Power2 A, Power2 B)
+{
+    Power2 tmp;
+    tmp.kick = A.kick - B.kick;
+    tmp.punch = A.punch - B.punch;
+    return tmp;
+}
+
+int ex1107_3()
+{
+    Power2 a(3, 5), b(4, 6), c, d;
+    c = a + b; // 파워 객체 + 연산
+    d = a - b; // 파워 객체 - 연산
+    a.show();
+    b.show();
+    c.show();
+    d.show();
+    return 0;
+}
+
+/*11월11일자 코드. (공결)*/
+
+// 실습 9-3 -> operator와 friend의 사용
+class Book5
+{
+    char *title; // 제목 문자열
+    int price;   // 가격
+public:
+    Book5(char *title, int price); // 일반 생성자
+    Book5(Book5 &obj);             // 복사 생성자
+    ~Book5();
+    void operator+=(int value) { this->price += value; }
+    void operator-=(int value) { this->price -= value; }
+    bool operator!()
+    {
+        if (this->price == 0)
+            return false;
+        else
+            return true;
+    }
+    void set(char *title, int price);
+    void show() { cout << title << ' ' << price << "원" << endl; }
+
+    // == 연산자를 friend 함수로 선언
+    friend bool operator==(const Book5 &book, int price);
+};
+
+// 외부에서 정의된 == 연산자
+bool operator==(const Book5 &book, int price)
+{
+    return book.price == price;
+}
+
+Book5::Book5(char *title, int price)
+{
+    // 클래스 멤버 변수와 함수 내 지역변수라서 구분을 this 포인터 사용
+    int length = strlen(title);
+    this->title = new char[length + 1];
+    this->price = price;
+    strcpy(this->title, title);
+}
+
+Book5::Book5(Book5 &obj)
+{
+    this->price = obj.price;
+    int length = strlen(obj.title);
+    this->title = new char[length + 1];
+    strcpy(this->title, obj.title);
+}
+
+Book5::~Book5()
+{
+    delete[] this->title;
+    cout << "소멸자" << endl;
+}
+
+void Book5::set(char *title, int price)
+{
+    delete[] this->title;
+    int length = strlen(title);
+    this->title = new char[length + 1];
+    strcpy(this->title, title);
+    this->price = price;
+}
+
+int ex1107_4()
+{
+    Book5 a((char *)"About Apple", 20000), b((char *)"What is justice?", 30000);
+
+    if (a == 30000) // friend operator== 호출
+        cout << "정가 30000원" << endl;
+    else
+        cout << "30000원 아니다" << endl;
+
+    return 0;
+}
+
+/*
+상속 문법은
+
+class 파생클래스이름 : 접근지정자 기본클래스이름
+{
+};
+*/
+
+// 2차원 평면에서 한 점을 표현하는 클래스 Point 선언
+class Point
+{
+    int x, y; // 한 점 (x,y) 좌표값
+public:
+    void set(int x, int y)
+    {
+        this->x = x;
+        this->y = y;
+    }
+    void showPoint()
+    {
+        cout << "(" << x << "," << y << ")" << endl;
+    }
+};
+
+// 2차원 평면에서 컬러점을 표현하는 클래스 ColorPoint. Point를 상속받음
+class ColorPoint : public Point
+{                 // 컬러 하나 추가하기
+    string color; // 점의 색 표현
+public:
+    void setColor(string color)
+    {
+        this->color = color;
+    }
+    void showColorPoint()
+    {
+        cout << color << ":";
+        showPoint(); // Point의 showPoint() 호출
+    }
+};
+
+// 교재 자료 10-1 p.7
+void ex1111_3()
+{                        // 업 캐스팅
+    Point p;             // 기본 클래스의 객체 생성
+    ColorPoint cp;       // 파생 클래스의 객체 생성
+    cp.set(3, 4);        // 기본 클래스의 멤버 호출
+    cp.setColor("Red");  // 파생 클래스의 멤버 호출
+    cp.showColorPoint(); // 파생 클래스의 멤버 호출
+
+    ColorPoint *pDer = &cp;
+    pDer->set(30, 40);
+    // (*pDer).set(30, 40)이나 cp.set(30, 40) 이랑 동일결과
+    pDer->setColor("Blue");
+    pDer->showColorPoint();
+
+    Point *pBase = (Point *)pDer;
+    pBase->set(300, 400);
+    pDer->showColorPoint();
+}
+
+void ex1111_4()
+{ // 다운 캐스팅 : 부모의 주소 -> 자식의 주소
+    ColorPoint cp;
+    ColorPoint *pDer;
+    Point *pBase = &cp; // 업캐스팅
+
+    pBase->set(3, 4);
+    pBase->showPoint();
+
+    pDer = (ColorPoint *)pBase; // 다운캐스팅
+    pDer->set(30, 40);
+    pDer->setColor("Blue");
+    pDer->showColorPoint();
+    pDer->showPoint();
+}
+
+// 실습 10-1
+class Circle6
+{
+private:
+    int radius;
+
+public:
+    Circle6() { radius = 1; }
+    Circle6(int radius) { this->radius = radius; }
+    double getArea() { return 3.14 * radius * radius; }
+    int getRadius() { return radius; }
+    // private이라 접근이 안되기에 함수로 값을 가져오기
+    void setRadius(int radius) { this->radius = radius; }
+};
+
+class NamedCircle6 : public Circle6
+{
+    string name;
+
+public:
+    NamedCircle6()
+    {
+        setRadius(0);
+        name = "default";
+    }
+    NamedCircle6(int radius, string name)
+    {
+        setRadius(radius);
+        this->name = name;
+    }
+    void show()
+    {
+        cout << "반지름이 " << getRadius() << "인 " << name << endl;
+        // radius는 부모 클래스의 private
+    }
+
+    string getName() { return name; }
+
+    friend void FindLargestNamedCircle6(NamedCircle6 *namedcircle, int size);
+};
+
+void ex1111_5()
+{
+    NamedCircle6 waffle(3, "waffle"); // 반지름이 3이고 이름이 waffle인 원
+    waffle.show();
+}
+
+// 실습 10-2
+void FindLargestNamedCircle6(NamedCircle6 *namedcircle, int size)
+{
+    int r_max = namedcircle[0].getRadius(); // namecircle -> namedcircle로 수정
+    int index_max = 0;
+
+    for (int i = 1; i < size; i++)
+    { // size-1 -> size로 수정
+        if (namedcircle[i].getRadius() > r_max)
+        { // < 를 >로 수정 (가장 큰 것을 찾아야 함)
+            r_max = namedcircle[i].getRadius();
+            index_max = i; // n -> i로 수정
+        }
+    }
+    //
+    cout << "가장 큰 피자는 반지름이 " << r_max << "인 " << namedcircle[index_max].getName() << " 입니다." << endl;
+
+    /*friend를 선언한다면! */
+    // friend 함수이므로 private 멤버 name에 직접 접근 가능
+    cout << "가장 큰 피자는 반지름이 " << r_max << "인 " << namedcircle[index_max].name << " 입니다." << endl;
+}
+
+int ex1114_1()
+{
+    NamedCircle6 pizza[5];
+    cout << "5개의 정수 반지름과 원의 이름을 입력하세요." << endl;
+    for (int i = 0; i < 5; i++)
+    {
+        int radius;
+        string name;
+        cin >> radius >> name;
+        pizza[i] = NamedCircle6(radius, name);
+    }
+    FindLargestNamedCircle6(pizza, 5);
+
+    return 0;
+}
+
+class BaseArray
+{
+private:
+    int capacity; // 동적 할당된 메모리 용량
+    int *mem;     // 정수 배열을 만들기 위한 메모리 //int meme[100]
+
+protected: // 부모가 자식을 위해 만들어놓음. 외부는 접근 불가, 자식은 접근 가능
+    void put(int index, int val) { mem[index] = val; }
+    int get(int index) { return mem[index]; }
+    int getCapacity() { return capacity; }
+    void MakeQueue(int capacity)
+    {
+        this->capacity = capacity;
+        mem = new int[capacity];
+    }
+
+public:
+    BaseArray(int capacity = 100)
+    {
+        this->capacity = capacity;
+        mem = new int[capacity];
+    }
+    ~BaseArray() { delete[] mem; }
+};
+
+class MyQueue : public BaseArray
+{
+    int index;
+
+public:
+    MyQueue(int cap)
+    {
+        MakeQueue(cap);
+        index = 0; // 초기화해줘야함
+    }
+    void enqueue(int n)
+    {
+        put(index, n);
+        index++; // 인덱스를 하나 증가시킨다.
+    }
+    int capacity() { return getCapacity(); } // 용량 리턴!!
+
+    int length()
+    {
+        return index;
+    }
+
+    int dequeue()
+    {
+        int value = get(0); //(1)
+        index--;            //(2)
+        for (int i = 0; i < index; i++)
+        { //(3)
+            // mem[i] = mem[i+1];
+            put(i, get(i + 1));
+        }
+        return value;
+    }
+};
+
+int main(void)
+{
+    MyQueue mQ(100);
+    int n;
+
+    cout << "enter 5 integer to put into queue>> ";
+    for (int i = 0; i < 5; i++)
+    {
+        cin >> n;
+        mQ.enqueue(n); // 수정된 부분: 입력받은 n을 큐에 삽입
+        // mQ.enqueue(i*10); // 큐에 삽입
+    }
+
+    cout << "queue's capacity:  " << mQ.capacity() << "  queue's size : " << mQ.length() << endl;
+
+    cout << "delete queue's content, and print it" << endl; // 큐의 내용을 삭제하고 출력
+    while (mQ.length() != 0)
+    {                                // 큐가 빌 때까지
+        cout << mQ.dequeue() << ' '; // dequeue하여 출력
+    }
+    cout << endl;
+
+    return 0;
 }
